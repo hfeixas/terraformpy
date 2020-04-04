@@ -45,6 +45,21 @@ def main():
     with open("main.tf.json", "w") as fd:
         json.dump(compile(), fd, indent=4, sort_keys=True)
 
+    if sys.argv[1:] == "plan" or sys.argv[1:] == "apply":
+        try:
+            cwd = os.getcwd()
+            modules_dir = f'{cwd}/.terraform/modules'
+            os.chdir(modules_dir)
+            modules = os.listdir()
+            for module in modules:
+                os.chdir(f'{modules_dir}/{module}')
+                print("terraformpy - Writing main.tf.json")
+                with open("main.tf.json", "w") as fd:
+                    json.dump(compile(), fd, indent=4, sort_keys=True)
+        except:
+            pass
+
+
     if len(sys.argv) > 1:
         print("terraformpy - Running terraform: %s" % " ".join(sys.argv[1:]))
         # replace ourself with terraform

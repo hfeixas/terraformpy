@@ -1,3 +1,7 @@
+# 1.3.1
+
+* Added try/catch when applying config to compile .tf.py files in the modules.
+
 # 1.3.0
 
 * Add Hooks to the different object types.  See the README and inline code for docs.
