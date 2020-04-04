@@ -45,22 +45,22 @@ def main():
     with open("main.tf.json", "w") as fd:
         json.dump(compile(), fd, indent=4, sort_keys=True)
 
-    if "plan" in sys.argv[1:] or "apply" in sys.argv[1:]:
-        print("Trying to compile modules")
-        try:
-            cwd = os.getcwd()
-            modules_dir = f'{cwd}/.terraform/modules'
-            os.chdir(modules_dir)
-            modules = os.listdir()
-            for module in modules:
-                os.chdir(f'{modules_dir}/{module}')
-                to_process = [ent for ent in os.listdir(os.getcwd()) if ent.endswith(".tf.py")]
-                for filename in to_process:
-                    imp.load_source(filename[:-6], filename)
-                with open("main.tf.json", "w") as fd:
-                    json.dump(compile(), fd, indent=4, sort_keys=True)
-        except:
-            pass
+#     if "plan" in sys.argv[1:] or "apply" in sys.argv[1:]:
+#         print("Trying to compile modules")
+#         try:
+#             cwd = os.getcwd()
+#             modules_dir = f'{cwd}/.terraform/modules'
+#             os.chdir(modules_dir)
+#             modules = os.listdir()
+#             for module in modules:
+#                 os.chdir(f'{modules_dir}/{module}')
+#                 to_process = [ent for ent in os.listdir(os.getcwd()) if ent.endswith(".tf.py")]
+#                 for filename in to_process:
+#                     imp.load_source(filename[:-6], filename)
+#                 with open("main.tf.json", "w") as fd:
+#                     json.dump(compile(), fd, indent=4, sort_keys=True)
+#         except:
+#             pass
 
 
     if len(sys.argv) > 1:
