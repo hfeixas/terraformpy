@@ -44,8 +44,7 @@ def main():
     print("terraformpy - Writing main.tf.json")
     with open("main.tf.json", "w") as fd:
         json.dump(compile(), fd, indent=4, sort_keys=True)
-    print("Debug")
-    print(sys.argv[1:])
+
     if "plan" in sys.argv[1:] or "apply" in sys.argv[1:]:
         print("Trying to compile modules")
         try:
@@ -55,7 +54,9 @@ def main():
             modules = os.listdir()
             for module in modules:
                 os.chdir(f'{modules_dir}/{module}')
-                print("terraformpy - Writing main.tf.json")
+                to_process = [ent for ent in os.listdir(os.getcwd()) if ent.endswith(".tf.py")]
+                for filename in to_process:
+                    imp.load_source(filename[:-6], filename)
                 with open("main.tf.json", "w") as fd:
                     json.dump(compile(), fd, indent=4, sort_keys=True)
         except:
