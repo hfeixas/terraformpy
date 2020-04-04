@@ -46,7 +46,7 @@ def main():
         json.dump(compile(), fd, indent=4, sort_keys=True)
     print("Debug")
     print(sys.argv[1:])
-    if sys.argv[1:] == "plan" or sys.argv[1:] == "apply":
+    if "plan" in sys.argv[1:] or "apply" in sys.argv[1:]:
         print("Trying to compile modules")
         try:
             cwd = os.getcwd()
